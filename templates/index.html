@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Care Point Hospital</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/logo.svg') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+</head>
+<body>
+    <script>
+        window.watsonAssistantChatOptions = {
+          integrationID: "49d80667-83e7-470a-ba1c-fe5ee37d799f", // The ID of this integration.
+          region: "aws-us-east-1", // The region your integration is hosted in.
+          serviceInstanceID: "20240910-1650-4079-4032-b1272db0feae", // The ID of your service instance.
+          onLoad: async (instance) => { await instance.render(); }
+        };
+        setTimeout(function(){
+          const t=document.createElement('script');
+          t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+          document.head.appendChild(t);
+        });
+    </script>
+
+    <div class="section">
+        <div class="header">
+            <div class="titledetails">
+                <img style="height: 3rem;" src="{{ url_for('static', filename='images/logo.svg') }}" alt="">
+                <p class="poppins" style="font-size: 1.5rem;">Care Point Hospital</p>
+            </div>
+            <div class="refs">
+                <a href="">Doctors</a>
+                <a href="">Appointment</a>
+                <a href="">Locations</a>
+            </div>
+        </div>
+    
+        <div class="gradient large">
+            <div class="largecontent">
+                <p class="biggesttext">Care Point<br/>Hospital and Care Center</p>
+                <p class="contenttext">We're your one stop solution for all the medical needs. Equipped with all the modern facilities and qualified doctors, we make sure that every patient is treated with the best available methodologies</p>
+                <div class="assistantbutton">
+                    <img style="height: 1.5rem;" src="{{ url_for('static', filename='images/chat.svg') }}" alt="">
+                    <p>Ask our assistant</p>
+                </div>
+            </div>
+            <img class="doctorimg" src="{{ url_for('static', filename='images/doctor.png') }}" alt="">
+        </div>
+    </div>
+
+    <div class="facilities">
+        <div class="heading">
+            <div class="line"></div>
+            <p class="cursive">Facilities</p>
+            <div class="line"></div>
+        </div>
+        <div class="container">
+            <div class="box" style="background-image: url('https://images.pexels.com/photos/3861787/pexels-photo-3861787.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');"><div class="hover-text">State of the Art Elevators</div></div>
+            <div class="box" style="background-image: url('https://images.pexels.com/photos/5726714/pexels-photo-5726714.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');"><div class="hover-text">Advanced Machinery</div></div>
+            <div class="box" style="background-image: url('https://images.pexels.com/photos/4386467/pexels-photo-4386467.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');"><div class="hover-text">Properly Trained Nursing Staff</div></div>
+            <div class="box" style="background-image: url('https://images.pexels.com/photos/5699982/pexels-photo-5699982.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');"><div class="hover-text">In-Hospital Pharmacy</div></div>
+        </div>
+    </div>
+
+    <div class="services">
+        <div class="heading">
+            <div class="line"></div>
+            <p class="cursive">Services</p>
+            <div class="line"></div>
+        </div>
+        <div class="container">
+            <div class="box2">
+                <img style="height: 3rem;" src="{{ url_for('static', filename='images/chat.svg') }}" alt="">
+                <p class="servicestext">Emergency Support</p>
+                <p>24/7 support from staff</p>
+                <img style="height: 1rem;" class="arrow" src="{{ url_for('static', filename='images/arrow.svg') }}" alt="">
+            </div>
+            <div class="box2">
+                <img style="height: 3rem;" src="{{ url_for('static', filename='images/chat.svg') }}" alt="">
+                <p class="servicestext">Attendant Lodging</p>
+                <p>Free attendant lodging</p>
+                <img style="height: 1rem;" class="arrow" src="{{ url_for('static', filename='images/arrow.svg') }}" alt="">
+            </div>
+            <div class="box2">
+                <img style="height: 3rem;" src="{{ url_for('static', filename='images/chat.svg') }}" alt="">
+                <p class="servicestext">Insurance Claims</p>
+                <p>No-hassle claim policy</p>
+                <img style="height: 1rem;" class="arrow" src="{{ url_for('static', filename='images/arrow.svg') }}" alt="">
+            </div>
+            <div class="box2">
+                <img style="height: 3rem;" src="{{ url_for('static', filename='images/chat.svg') }}" alt="">
+                <p class="servicestext">Doctor one to ones</p>
+                <p>Hear from your doctor frequently</p>
+                <img style="height: 1rem;" class="arrow" src="{{ url_for('static', filename='images/arrow.svg') }}" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="availservices">
+        <div class="heading">
+            <div class="line"></div>
+            <p class="cursive">Avail Services</p>
+            <div class="line"></div>
+        </div>
+
+        <div class="servicesdiv">
+            <p>For availing services like:</p>
+            <div class="availservicess">
+                <div class="gradient availservice">Booking a bed/OPD</div>
+                <div class="gradient availservice">Medicines</div>
+                <div class="gradient availservice">Getting Availability</div>
+                <div class="gradient availservice">Booking an appointment</div>
+                <div class="gradient availservice">Knowing about doctors</div>
+            </div>
+            <p style="font-size: 0.8rem; margin-top: 1rem;">Use our smart assistant, powered by IBM AI</p>
+        </div>
+        
+    </div>
+
+    <div class="footer gradient">
+        <div class="footerleft">
+            <p style="font-size: 1.5rem;">For Patients</p>
+            <a href="">Book an appointment</a>
+            <a href="">See bed availability</a>
+            <a href="">Get medicines</a>
+            <a href="">Treatment</a>
+        </div>
+
+        <div class="footerleft">
+            <p style="font-size: 1.5rem;">For Corporates</p>
+            <a href="">Get bulk insurance quotes</a>
+            <a href="">Get bundles</a>
+            <a href="">Contact our representative</a>
+            <a href="">Renew bundle</a>
+        </div>
+        <a class="footernote" href="https://www.ibm.com/products/watsonx-orchestrate" target="_blank">Powered by IBM Orchestrate</a>
+    </div>
+</body>
+</html>
