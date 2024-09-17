@@ -11,5 +11,5 @@ def index():
 
 if __name__=="__main__":
     # app.run(port=5000, debug=True, host='192.168.29.183')
-    app.run()
+    app.run(debug=True)
     

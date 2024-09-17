@@ -10,7 +10,7 @@
 <body>
     <script>
         window.watsonAssistantChatOptions = {
-          integrationID: "49d80667-83e7-470a-ba1c-fe5ee37d799f", // The ID of this integration.
+          integrationID: "aaaca60e-3d6b-41ae-9f10-091ffbac62de", // The ID of this integration.
           region: "aws-us-east-1", // The region your integration is hosted in.
           serviceInstanceID: "20240910-1650-4079-4032-b1272db0feae", // The ID of your service instance.
           onLoad: async (instance) => { await instance.render(); }
@@ -20,7 +20,7 @@
           t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
           document.head.appendChild(t);
         });
-    </script>
+      </script>
 
     <div class="section">
         <div class="header">
@@ -39,7 +39,7 @@
             <div class="largecontent">
                 <p class="biggesttext">Care Point<br/>Hospital and Care Center</p>
                 <p class="contenttext">We're your one stop solution for all the medical needs. Equipped with all the modern facilities and qualified doctors, we make sure that every patient is treated with the best available methodologies</p>
-                <div class="assistantbutton" onclick="console.log(window.watsonAssistantChatOptions)">
+                <div class="assistantbutton" onclick="document.getElementById('WACLauncher__Button').click()">
                     <img style="height: 1.5rem;" src="{{ url_for('static', filename='images/chat.svg') }}" alt="">
                     <p>Ask our assistant</p>
                 </div>
@@ -106,11 +106,11 @@
         <div class="servicesdiv">
             <p>For availing services like:</p>
             <div class="availservicess">
-                <div class="gradient availservice">Booking a bed/OPD</div>
-                <div class="gradient availservice">Medicines</div>
-                <div class="gradient availservice">Getting Availability</div>
-                <div class="gradient availservice">Booking an appointment</div>
-                <div class="gradient availservice">Knowing about doctors</div>
+                <div class="gradient availservice" onclick="document.getElementById('WACLauncher__Button').click()">Booking a bed/OPD</div>
+                <div class="gradient availservice" onclick="document.getElementById('WACLauncher__Button').click()">Medicines</div>
+                <div class="gradient availservice" onclick="document.getElementById('WACLauncher__Button').click()">Getting Availability</div>
+                <div class="gradient availservice" onclick="document.getElementById('WACLauncher__Button').click()">Booking an appointment</div>
+                <div class="gradient availservice" onclick="document.getElementById('WACLauncher__Button').click()">Knowing about doctors</div>
             </div>
             <p style="font-size: 0.8rem; margin-top: 1rem;">Use our smart assistant, powered by IBM AI</p>
         </div>
