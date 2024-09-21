@@ -95,13 +95,13 @@
 
                 <div class="route">
                     <h2>1. Order Medicine</h2>
-                    <p><strong>Route:</strong> <code>/ordermedicine/&lt;medicines&gt;</code></p>
+                    <p><strong>Route:</strong> <code>/ordermedicine/&lt;medicines&gt;/&lt;emailId&gt;</code></p>
                     <p><strong>Method:</strong> GET</p>
                     <p><strong>Description:</strong> Orders medicines, where <code>&lt;medicines&gt;</code> is a comma-separated list of medicine names.</p>
                     <p><strong>Response:</strong> A JSON object of Medicine with prices and availability.</p>
                     <pre><code>
                 Example Request:
-                  curl https://carepoint-ecru.vercel.app/ordermedicine/Paracetamol
+                  curl https://carepoint-ecru.vercel.app/ordermedicine/Paracetamol/abc@gmail.com
                     </code></pre>
                     <pre><code>
                 Example Response:
@@ -130,13 +130,13 @@
                 
                 <div class="route">
                     <h2>3. Book an Appointment</h2>
-                    <p><strong>Route:</strong> <code>/bookappointment/&lt;doctor&gt;/&lt;datetime&gt;</code></p>
+                    <p><strong>Route:</strong> <code>/bookappointment/&lt;doctor&gt;/&lt;datetime&gt;/&lt;emailId&gt;</code></p>
                     <p><strong>Method:</strong> GET</p>
                     <p><strong>Description:</strong> Books an appointment with a doctor at a specified date and time.</p>
                     <p><strong>Response:</strong> A JSON object confirming the booking.</p>
                     <pre><code>
                 Example Request:
-                  curl https://carepoint-ecru.vercel.app/bookappointment/Dr.%20Benjamin%20Lee/2024-09-20%2014:00
+                  curl https://carepoint-ecru.vercel.app/bookappointment/Dr.%20Benjamin%20Lee/2024-09-20%2014:00/abc@gmail.com
                     </code></pre>
                     <pre><code>
                 Example Response:
@@ -149,13 +149,13 @@
                 
                 <div class="route">
                     <h2>4. Book a Bed</h2>
-                    <p><strong>Route:</strong> <code>/bookbed/&lt;date&gt;</code></p>
+                    <p><strong>Route:</strong> <code>/bookbed/&lt;date&gt;/&lt;emailId&gt;</code></p>
                     <p><strong>Method:</strong> GET</p>
                     <p><strong>Description:</strong> Books the first available bed for a specified date.</p>
                     <p><strong>Response:</strong> A JSON message indicating whether a bed was successfully booked.</p>
                     <pre><code>
                 Example Request:
-                  curl https://carepoint-ecru.vercel.app/bookbed/2024-09-17
+                  curl https://carepoint-ecru.vercel.app/bookbed/2024-09-17/abc@gmail.com
                     </code></pre>
                     <pre><code>
                 Example Response (if available bed found):

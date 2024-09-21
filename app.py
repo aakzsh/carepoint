@@ -29,11 +29,11 @@ def documentation():
     return render_template("documentation.html")
 
 # Route for ordering medicines
-@app.route('/ordermedicine/<medicines>')
-def ordermedicine(medicines):
-    all_meds = medicines.split(",")
+@app.route('/ordermedicine/<medicines>/<emailId>')
+def ordermedicine(medicines,emailId):
+    all_meds = medicines
     collection = db['medicines']
-    ordered_meds = collection.find({"name": {"$in": all_meds}})
+    ordered_meds = collection.find({"name": all_meds, "emailId": emailId})
     
     # Prepare response
     meds_list = {"name": med["name"], "price": med["price"], "availability": med["availability"]}
