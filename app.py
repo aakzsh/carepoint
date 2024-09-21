@@ -49,7 +49,7 @@ def getbedavailability(date):
     # Prepare response with multiple available beds
     beds_list = [{"bed_id": bed["bed_id"], "type": bed["type"], "status": bed["status"]} for bed in available_beds]
     
-    return jsonify(beds_list) if beds_list else "No beds available on this date"
+    return jsonify(beds_list) if beds_list else jsonify({"response": "No beds available on this date"})
 
 # Route for booking an appointment with a doctor
 @app.route('/bookappointment/<doctor>/<datetime>')
