@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation | Care Point</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #FFBA09 3px solid;
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        header ul {
+            padding: 0;
+            list-style: none;
+        }
+
+        header li {
+            display: inline;
+            padding: 0 20px 0 20px;
+        }
+
+        .main {
+            padding: 20px;
+            background: #fff;
+            margin-top: 20px;
+        }
+
+        .route {
+            margin-bottom: 20px;
+        }
+
+        .route h2 {
+            color: #333;
+        }
+
+        .route p {
+            margin: 5px 0;
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            position: relative;
+            margin-top: 10px;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 4px;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>API Documentation | Care Point</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main">
+            <h2>Introduction</h2>
+            <p>This document provides an overview of the available API routes, their methods, and the expected input and
+                output formats for Care Point</p>
+
+                <div class="route">
+                    <h2>1. Order Medicine</h2>
+                    <p><strong>Route:</strong> <code>/ordermedicine/&lt;medicines&gt;</code></p>
+                    <p><strong>Method:</strong> GET</p>
+                    <p><strong>Description:</strong> Orders medicines, where <code>&lt;medicines&gt;</code> is a comma-separated list of medicine names.</p>
+                    <p><strong>Response:</strong> A JSON array of Medicine with prices and availability.</p>
+                    <pre><code>
+                Example Request:
+                  curl https://carepoint-ecru.vercel.app/ordermedicine/Paracetamol,Ibuprofen
+                    </code></pre>
+                    <pre><code>
+                Example Response:
+                [
+                    {"name": "Paracetamol", "price": 50, "availability": true},
+                    {"name": "Ibuprofen", "price": 100, "availability": false}
+                ]
+                    </code></pre>
+                </div>
+                
+                <div class="route">
+                    <h2>2. Get Bed Availability</h2>
+                    <p><strong>Route:</strong> <code>/getbedavailability/&lt;date&gt;</code></p>
+                    <p><strong>Method:</strong> GET</p>
+                    <p><strong>Description:</strong> Fetches available beds for a specific date.</p>
+                    <p><strong>Response:</strong> A JSON array of available beds for the given date.</p>
+                    <pre><code>
+                Example Request:
+                  curl https://carepoint-ecru.vercel.app/getbedavailability/2024-09-17
+                    </code></pre>
+                    <pre><code>
+                Example Response:
+                [
+                    {"bed_id": "B001", "type": "ICU", "status": "available"},
+                    {"bed_id": "B002", "type": "General", "status": "available"}
+                ]
+                    </code></pre>
+                </div>
+                
+                <div class="route">
+                    <h2>3. Book an Appointment</h2>
+                    <p><strong>Route:</strong> <code>/bookappointment/&lt;doctor&gt;/&lt;datetime&gt;</code></p>
+                    <p><strong>Method:</strong> GET</p>
+                    <p><strong>Description:</strong> Books an appointment with a doctor at a specified date and time.</p>
+                    <p><strong>Response:</strong> A JSON object confirming the booking.</p>
+                    <pre><code>
+                Example Request:
+                  curl https://carepoint-ecru.vercel.app/bookappointment/Dr.%20Benjamin%20Lee/2024-09-20%2014:00
+                    </code></pre>
+                    <pre><code>
+                Example Response:
+                {
+                    "message": "Appointment booked",
+                    "id": "64f1b5ac12b4c24e004d6c33"
+                }
+                    </code></pre>
+                </div>
+                
+                <div class="route">
+                    <h2>4. Book a Bed</h2>
+                    <p><strong>Route:</strong> <code>/bookbed/&lt;date&gt;</code></p>
+                    <p><strong>Method:</strong> GET</p>
+                    <p><strong>Description:</strong> Books the first available bed for a specified date.</p>
+                    <p><strong>Response:</strong> A JSON message indicating whether a bed was successfully booked.</p>
+                    <pre><code>
+                Example Request:
+                  curl https://carepoint-ecru.vercel.app/bookbed/2024-09-17
+                    </code></pre>
+                    <pre><code>
+                Example Response (if available bed found):
+                {
+                    "message": "Bed B001 booked successfully"
+                }
+                Example Response (if no available beds):
+                "No beds available for booking on this date"
+                    </code></pre>
+                </div>
+                
+
+        </div>
+    </div>
+</body>
+
+</html>

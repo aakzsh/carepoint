@@ -23,6 +23,11 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
+# Route for the homepage
+@app.route('/documentation')
+def documentation():
+    return render_template("documentation.html")
+
 # Route for ordering medicines
 @app.route('/ordermedicine/<medicines>')
 def ordermedicine(medicines):
