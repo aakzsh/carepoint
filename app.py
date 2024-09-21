@@ -36,7 +36,7 @@ def ordermedicine(medicines):
     ordered_meds = collection.find({"name": {"$in": all_meds}})
     
     # Prepare response
-    meds_list = [{"name": med["name"], "price": med["price"], "availability": med["availability"]} for med in ordered_meds]
+    meds_list = {"name": med["name"], "price": med["price"], "availability": med["availability"]}
     
     return jsonify(meds_list) if meds_list else "Medicines not found"
 
@@ -52,16 +52,16 @@ def getbedavailability(date):
     return jsonify(beds_list) if beds_list else jsonify({"response": "No beds available on this date"})
 
 # Route for booking an appointment with a doctor
-@app.route('/bookappointment/<doctor>/<datetime>')
-def bookappointment(doctor, datetime):
+@app.route('/bookappointment/<doctor>/<datetime>/<emailId>')
+def bookappointment(doctor, datetime, emailId):
     collection = db['appointments']
-    result = collection.insert_one({"doctor": doctor, "datetime": datetime, "status": "booked"})
+    result = collection.insert_one({"doctor": doctor, "datetime": datetime, "status": "booked", "emailId": emailId})
     
     return jsonify({"message": "Appointment booked", "id": str(result.inserted_id)})
 
 # Route for booking a bed on a specific date
-@app.route('/bookbed/<date>')
-def bookbed(date):
+@app.route('/bookbed/<date>/<emailId>')
+def bookbed(date, emailId):
     collection = db['beds']
     
     # Find the first available bed for the given date
@@ -69,10 +69,10 @@ def bookbed(date):
     
     if available_bed:
         # Mark the bed as booked
-        result = collection.update_one({"_id": available_bed["_id"]}, {"$set": {"status": "booked"}})
+        result = collection.update_one({"_id": available_bed["_id"]}, {"$set": {"status": "booked", "emailId": emailId}})
         return jsonify({"message": f"Bed {available_bed['bed_id']} booked successfully"})
     else:
-        return "No beds available for booking on this date"
+        return jsonify({"message":"No beds available for booking on this date"})
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

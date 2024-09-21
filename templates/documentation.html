@@ -98,17 +98,14 @@
                     <p><strong>Route:</strong> <code>/ordermedicine/&lt;medicines&gt;</code></p>
                     <p><strong>Method:</strong> GET</p>
                     <p><strong>Description:</strong> Orders medicines, where <code>&lt;medicines&gt;</code> is a comma-separated list of medicine names.</p>
-                    <p><strong>Response:</strong> A JSON array of Medicine with prices and availability.</p>
+                    <p><strong>Response:</strong> A JSON object of Medicine with prices and availability.</p>
                     <pre><code>
                 Example Request:
-                  curl https://carepoint-ecru.vercel.app/ordermedicine/Paracetamol,Ibuprofen
+                  curl https://carepoint-ecru.vercel.app/ordermedicine/Paracetamol
                     </code></pre>
                     <pre><code>
                 Example Response:
-                [
-                    {"name": "Paracetamol", "price": 50, "availability": true},
-                    {"name": "Ibuprofen", "price": 100, "availability": false}
-                ]
+                {"name": "Paracetamol", "price": 50, "availability": true}
                     </code></pre>
                 </div>
                 
