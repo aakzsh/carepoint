@@ -29,14 +29,15 @@ def documentation():
     return render_template("documentation.html")
 
 # Route for ordering medicines
-@app.route('/ordermedicine/<medicines>/<emailId>')
-def ordermedicine(medicines,emailId):
-    all_meds = medicines.split(",")
+@app.route('/ordermedicine/<medicine>/<emailId>')
+def ordermedicine(medicine,emailId):
+    all_meds = medicine.lower()
+    print(all_meds, medicine, "------------")
     collection = db['medicines']
-    ordered_meds = collection.find({"name": {"$in": all_meds}})
+    ordered_meds = collection.find({"name":  all_meds})
     collection = db['medicineorders']
-    # Prepare response
-    meds_list = [{"name": med["name"], "price": med["price"], "availability": med["availability"]} for med in ordered_meds]
+    # Prepare response 
+    meds_list = {"name": ordered_meds[0]["name"], "price": ordered_meds[0]["price"], "availability": ordered_meds[0]["availability"]}
     result = collection.insert_one({"email": emailId, "order": meds_list})
     return jsonify(meds_list) if meds_list else "Medicines not found"
 
