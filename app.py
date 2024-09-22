@@ -41,6 +41,7 @@ def ordermedicine(medicine,emailId):
     result = collection.insert_one({"email": emailId, "order": meds_list})
     return jsonify(meds_list) if meds_list else "Medicines not found"
 
+
 # @app.route('/ordermedicine/<medicines>/<emailId>')
 # def ordermedicine(medicines,emailId):
 #     all_meds = medicines
