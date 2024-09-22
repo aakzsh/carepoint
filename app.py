@@ -87,5 +87,6 @@ def bookbed(date, emailId):
     else:
         return jsonify({"message":"No beds available for booking on this date"})
 
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
