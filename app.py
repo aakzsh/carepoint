@@ -3,12 +3,18 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 import certifi
 import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+# from sendgrid import SendGridAPIClient
+# from sendgrid.helpers.mail import Mail
+import ssl
 
 # Load the .env file
 load_dotenv()
 
 # Get the MongoDB connection string from environment variables
 connection_string = os.environ.get('CONNECTION')
+sendgrid_api_key = os.environ.get('SENDGRID_API_KEY')
 
 # Connect to MongoDB cluster
 client = MongoClient(connection_string, tlsCAFile=certifi.where())
@@ -39,6 +45,31 @@ def ordermedicine(medicine,emailId):
     # Prepare response 
     meds_list = {"name": ordered_meds[0]["name"], "price": ordered_meds[0]["price"], "availability": ordered_meds[0]["availability"]}
     result = collection.insert_one({"email": emailId, "order": meds_list})
+
+    subject = "Medicine Order Confirmation - Care Point Hospital"
+    
+    # Customize the email content using the parameters medicine_name, price, and emailid
+    html_content = f"""
+    <html>
+    <body>
+        <h2>Medicine Order Successful - Care Point Hospital</h2>
+        <p>Dear Customer,</p>
+        <p>Your order for <strong>{medicine}</strong> has been successfully placed.</p>
+        <p><strong>Order Details:</strong></p>
+        <ul>
+            <li><strong>Medicine Name:</strong> {medicine}</li>
+            <li><strong>Total Price:</strong> ${ordered_meds[0]["price"]}</li>
+            <li><strong>Email:</strong> {emailId}</li>
+        </ul>
+        <p>We will notify you once your order is ready for pickup or delivery.</p>
+        <p>Thank you for choosing Care Point Hospital for your medical needs!</p>
+        <p>Best Regards,<br>Care Point Hospital Pharmacy Team</p>
+    </body>
+    </html>
+    """
+
+    send_email(emailId, subject, html_content)
+
     return jsonify(meds_list) if meds_list else "Medicines not found"
 
 
@@ -69,6 +100,29 @@ def getbedavailability(date):
 def bookappointment(doctor, datetime, emailId):
     collection = db['appointments']
     result = collection.insert_one({"doctor": doctor, "datetime": datetime, "status": "booked", "emailId": emailId})
+    subject = "Doctor Appointment Confirmation - Care Point Hospital"
+    
+    # Customize the email content using the parameters doctor_name, emailid, and date
+    html_content = f"""
+    <html>
+    <body>
+        <h2>Appointment Booking Successful - Care Point Hospital</h2>
+        <p>Dear Patient,</p>
+        <p>Your appointment with Dr. <strong>{doctor}</strong> has been successfully confirmed.</p>
+        <p><strong>Appointment Details:</strong></p>
+        <ul>
+            <li><strong>Doctor's Name:</strong> Dr. {doctor}</li>
+            <li><strong>Appointment Date:</strong> {datetime}</li>
+            <li><strong>Email:</strong> {emailId}</li>
+        </ul>
+        <p>Please arrive 15 minutes early and bring any relevant medical records with you.</p>
+        <p>We look forward to seeing you!</p>
+        <p>Best Regards,<br>Care Point Hospital Team</p>
+    </body>
+    </html>
+    """
+    send_email(emailId, subject ,html_content )
+
     
     return jsonify({"message": "Appointment booked", "id": str(result.inserted_id)})
 
@@ -83,9 +137,53 @@ def bookbed(date, emailId):
     if available_bed:
         # Mark the bed as booked
         result = collection.update_one({"_id": available_bed["_id"]}, {"$set": {"status": "booked", "emailId": emailId}})
+        subject = "Bed Booking Confirmation - Care Point Hospital"
+    
+    # Customize the email content using the parameters id, emailid, and date
+        html_content = f"""
+        <html>
+        <body>
+            <h2>Bed Booking Successful - Care Point Hospital</h2>
+            <p>Dear Patient,</p>
+            <p>We are pleased to inform you that your bed booking at Care Point Hospital has been successfully confirmed.</p>
+            <p><strong>Booking Details:</strong></p>
+            <ul>
+                <li><strong>Booking ID:</strong> {available_bed["_id"]}</li>
+                <li><strong>Email:</strong> {emailId}</li>
+                <li><strong>Date of Booking:</strong> {date}</li>
+            </ul>
+            <p>Thank you for choosing Care Point Hospital. We are committed to providing you with the best care.</p>
+            <p>Best Regards,<br>Care Point Hospital Team</p>
+        </body>
+        </html>
+        """
+        send_email(emailId, subject ,html_content )
         return jsonify({"message": f"Bed {available_bed['bed_id']} booked successfully"})
     else:
         return jsonify({"message":"No beds available for booking on this date"})
+
+
+
+# Disable SSL verification (insecure)
+ssl._create_default_https_context = ssl._create_unverified_context
+
+
+def send_email(to_email,subject,html_content):
+    message = Mail(
+        from_email='aakashferrari@gmail.com',
+        to_emails=to_email,
+        subject=subject,
+        html_content=html_content
+    )
+
+    try:
+        sg = SendGridAPIClient(sendgrid_api_key)
+        response = sg.send(message)
+        print(f"Email sent successfully! Status code: {response.status_code}")
+    except Exception as e:
+        print(f"Error sending email: {e}")
+
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
