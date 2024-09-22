@@ -89,7 +89,7 @@ def ordermedicine(medicine,emailId):
 def getbedavailability(date):
     collection = db['beds']
     available_beds = collection.find({"date": date, "status": "available"})
-    
+     
     # Prepare response with multiple available beds
     beds_list = [{"bed_id": bed["bed_id"], "type": bed["type"], "status": bed["status"]} for bed in available_beds]
     
