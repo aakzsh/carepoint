@@ -45,11 +45,12 @@ This repository contains the Flask backend for the Care Point Hospital AI assist
    ```
 
 5. **Run the Application**
-   - You can start the app with either of these commands:
+   You can start the app with either of these commands:
      ```bash
      python app.py
      ```
      or
+     
      ```bash
      flask run
      ```

@@ -31,14 +31,25 @@ def documentation():
 # Route for ordering medicines
 @app.route('/ordermedicine/<medicines>/<emailId>')
 def ordermedicine(medicines,emailId):
-    all_meds = medicines
+    all_meds = medicines.split(",")
     collection = db['medicines']
-    ordered_meds = collection.find({"name": all_meds, "emailId": emailId})
-    
+    ordered_meds = collection.find({"name": {"$in": all_meds}})
+    collection = db['medicineorders']
     # Prepare response
-    meds_list = {"name": med["name"], "price": med["price"], "availability": med["availability"]}
-    
+    meds_list = [{"name": med["name"], "price": med["price"], "availability": med["availability"]} for med in ordered_meds]
+    result = collection.insert_one({"email": emailId, "order": meds_list})
     return jsonify(meds_list) if meds_list else "Medicines not found"
+
+# @app.route('/ordermedicine/<medicines>/<emailId>')
+# def ordermedicine(medicines,emailId):
+#     all_meds = medicines
+#     collection = db['medicines']
+#     ordered_meds = collection.find({"name": all_meds, "emailId": emailId})
+    
+#     # Prepare response
+#     meds_list = [{"name": med["name"], "price": med["price"], "availability": med["availability"]} for med in ordered_meds]
+    
+#     return jsonify(meds_list) if meds_list else "Medicines not found"
 
 # Route for checking bed availability on a specific date
 @app.route('/getbedavailability/<date>')
@@ -52,16 +63,16 @@ def getbedavailability(date):
     return jsonify(beds_list) if beds_list else jsonify({"response": "No beds available on this date"})
 
 # Route for booking an appointment with a doctor
-@app.route('/bookappointment/<doctor>/<datetime>/<emailId>')
-def bookappointment(doctor, datetime, emailId):
+@app.route('/bookappointment/<doctor>/<datetime>')
+def bookappointment(doctor, datetime):
     collection = db['appointments']
-    result = collection.insert_one({"doctor": doctor, "datetime": datetime, "status": "booked", "emailId": emailId})
+    result = collection.insert_one({"doctor": doctor, "datetime": datetime, "status": "booked"})
     
     return jsonify({"message": "Appointment booked", "id": str(result.inserted_id)})
 
 # Route for booking a bed on a specific date
-@app.route('/bookbed/<date>/<emailId>')
-def bookbed(date, emailId):
+@app.route('/bookbed/<date>')
+def bookbed(date):
     collection = db['beds']
     
     # Find the first available bed for the given date
@@ -69,10 +80,10 @@ def bookbed(date, emailId):
     
     if available_bed:
         # Mark the bed as booked
-        result = collection.update_one({"_id": available_bed["_id"]}, {"$set": {"status": "booked", "emailId": emailId}})
+        result = collection.update_one({"_id": available_bed["_id"]}, {"$set": {"status": "booked"}})
         return jsonify({"message": f"Bed {available_bed['bed_id']} booked successfully"})
     else:
-        return jsonify({"message":"No beds available for booking on this date"})
+        return "No beds available for booking on this date"
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
