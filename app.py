@@ -64,10 +64,10 @@ def getbedavailability(date):
     return jsonify(beds_list) if beds_list else jsonify({"response": "No beds available on this date"})
 
 # Route for booking an appointment with a doctor
-@app.route('/bookappointment/<doctor>/<datetime>')
-def bookappointment(doctor, datetime):
+@app.route('/bookappointment/<doctor>/<datetime>/<emailId>')
+def bookappointment(doctor, datetime, emailId):
     collection = db['appointments']
-    result = collection.insert_one({"doctor": doctor, "datetime": datetime, "status": "booked"})
+    result = collection.insert_one({"doctor": doctor, "datetime": datetime, "status": "booked", "emailId": emailId})
     
     return jsonify({"message": "Appointment booked", "id": str(result.inserted_id)})
 
